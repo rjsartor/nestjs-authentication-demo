@@ -1,5 +1,7 @@
 # Articles App
 
+This is a simple Nextjs web-app with Nestjs backend demonstrating authentication with Auth0. The repository is an Nx mono-repo with articles-server and articles-client apps.
+
 ## Client set up
 
 To run this application you will need to creat a free Auth0 account. Follow the guide for "Regular Web Application" here https://auth0.com/docs/quickstart/webapp.

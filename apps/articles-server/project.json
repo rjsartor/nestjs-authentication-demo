@@ -14,7 +14,13 @@
         "outputPath": "dist/apps/articles-server",
         "main": "apps/articles-server/src/main.ts",
         "tsConfig": "apps/articles-server/tsconfig.app.json",
-        "assets": ["apps/articles-server/src/assets"],
+        "assets": [
+          {
+            "input": "apps/articles-server/src/certs",
+            "glob": "**/*",
+            "output": "./certs"
+          }
+        ],
         "isolatedConfig": true,
         "webpackConfig": "apps/articles-server/webpack.config.js"
       },

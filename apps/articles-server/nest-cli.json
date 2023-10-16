@@ -1,0 +1,8 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/articles-server/src",
+  "compilerOptions": {
+    "assets": ["apps/articles-server/src/certs/**/*"],
+    "watchAssets": true
+  }
+}

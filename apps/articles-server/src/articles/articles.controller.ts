@@ -16,10 +16,11 @@ export class ArticlesController {
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOneById(@Param('id') id: string, @Req() req: Request): Article {
-    const { id: userId } = (req as any).user;
+    const { user } = req as any;
+    const userId = user?.id;
     const article = this.articlesService.findById(id);
 
-    if (id) {
+    if (id && userId) {
       if (!visitedLinksStore[userId]) {
         visitedLinksStore[userId] = [id];
       } else {
@@ -27,7 +28,12 @@ export class ArticlesController {
       }
     }
 
-    Logger.log(visitedLinksStore, 'Visted Links: ');
+    this.logVisitedLinks();
+
     return article;
+  }
+
+  private logVisitedLinks() {
+    Logger.log(visitedLinksStore, 'Visited Links: ');
   }
 }

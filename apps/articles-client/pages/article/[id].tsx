@@ -24,14 +24,13 @@ const ArticleDetails: React.FC = () => {
         if (res.status === 200) setArticle(res.data);
       } catch (error: any) {
         if (error.response && error.response.status === 401) {
-          const currentPath = router.asPath;
-          router.push(`/api/auth/login?returnTo=${currentPath}`); 
+          router.push(`/api/auth/login?returnTo=article/${id}`); 
           setError(`${error.response.statusText} - ${error.response.data.message}`);
         }
       }
     }
 
-    fetchArticle();
+    if (id) fetchArticle();
   }, [id, router])
 
   if (error) {

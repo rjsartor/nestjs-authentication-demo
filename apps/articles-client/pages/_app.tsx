@@ -9,7 +9,7 @@ function CustomApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>F off</title>
+        <title>Articles app</title>
       </Head>
       <main className="app">
         <UserProvider>

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Logger, Param, Req, UseGuards } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { Article } from './articles.interface';
 import { visitedLinksStore } from '../store/store';
@@ -16,20 +16,18 @@ export class ArticlesController {
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   findOneById(@Param('id') id: string, @Req() req: Request): Article {
-    const { name } = (req as any).user;
+    const { id: userId } = (req as any).user;
     const article = this.articlesService.findById(id);
 
     if (id) {
-      if (!visitedLinksStore[name]) {
-        visitedLinksStore[name] = [];
-      }
-  
-      if (!visitedLinksStore[name].includes(id)) {
-        visitedLinksStore[name].push(id);
+      if (!visitedLinksStore[userId]) {
+        visitedLinksStore[userId] = [id];
+      } else {
+        visitedLinksStore[userId].push(id);
       }
     }
 
-    console.log('visitedLinks: ', visitedLinksStore);
+    Logger.log(visitedLinksStore, 'Visted Links: ');
     return article;
   }
 }

@@ -36,19 +36,28 @@ const ArticleDetails: React.FC = () => {
 
   if (error) {
     return (
-      <div>
-        <p> {error}</p>
-        <button onClick={() => router.push('/resources')}>Back</button>
+      <div style={{ padding: '1rem' }}>
+        <p>{error}</p>
+        <button 
+          onClick={() => router.push('/resources')}
+        >
+          Back
+        </button>
       </div>
     );
   }
 
   return (
-    <div>
-      <h1>{article.title}</h1>
-      <h3>{article.author}</h3>
+    <div style={{ padding: '1rem' }}>
+      <h3 style={{ borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>{article.title}</h3>
+      <h1>{article.author}</h1>
       <p>{article.content}</p>
-      <button onClick={goBack}>Back</button>
+      <button 
+        onClick={goBack} 
+        style={{ marginTop: '2rem' }}
+      >
+        Back
+      </button>
     </div>
   );
 }

@@ -22,8 +22,7 @@ export function Resources() {
 
   const handleArticleClick = (articleId: string) => {
     if (!isAuthenticated) {
-      const currentPath = router.asPath;
-      router.push(`/api/auth/login?returnTo=${currentPath}`);    
+      router.push(`/api/auth/login?returnTo=article/${articleId}`);    
       return;
     }
   

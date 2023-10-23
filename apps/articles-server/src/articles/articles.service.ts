@@ -21,11 +21,11 @@ const inMemoryArticles = [
 export class ArticlesService {
   private readonly articles: Article[] = inMemoryArticles;
 
-  getAllTitles(): Partial<Article>[] {
+  async getAllTitles(): Promise<Partial<Article>[]> {
     return this.articles.map(article => ({ id: article.id, title: article.title }));
   }
 
-  findById(id: string): Article {
+  async findById(id: string): Promise<Article> {
     const [article] = this.articles.filter(a => a.id === id);
     return article;
   }

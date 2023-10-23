@@ -17,8 +17,9 @@ export default async function callback(req: NextApiRequest, res: NextApiResponse
                 'Authorization': `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
-                email: session.user.name,
-                name: session.user.nickname,
+                email: session.user.email,
+                name: session.user.name,
+                sub: session.user.sub, 
             }),
           });
           
@@ -26,7 +27,7 @@ export default async function callback(req: NextApiRequest, res: NextApiResponse
 
           if (!backendResponse.ok) throw new Error('Failed to fetch JWT from the backend');
 
-          res.setHeader('Set-Cookie', `token=${backendData.access_token}; HttpOnly; Secure; Path=/; SameSite=Strict;`);
+          res.setHeader('Set-Cookie', `token=${backendData.accessToken}; HttpOnly; Secure; Path=/; SameSite=Strict;`);
 
           session.returnTo = req.query.returnTo || '/';
           return session;

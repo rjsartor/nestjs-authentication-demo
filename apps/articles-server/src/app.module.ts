@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { VisitedLinksModule } from './visted-links/visited-links.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -20,8 +21,8 @@ import { VisitedLinksModule } from './visted-links/visited-links.module';
     }),
     ArticlesModule,
     AuthModule,
-    
     VisitedLinksModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

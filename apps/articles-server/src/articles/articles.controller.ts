@@ -1,39 +1,33 @@
-import { Controller, Get, Logger, Param, Req, UseGuards } from '@nestjs/common';
+import { VisitedLinksService } from './../visted-links/visited-links.service';
+import { Controller, Get, Param, Req, UseGuards } from '@nestjs/common';
 import { ArticlesService } from './articles.service';
 import { Article } from './articles.interface';
-import { visitedLinksStore } from '../store/store';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('articles')
 export class ArticlesController {
-  constructor(private articlesService: ArticlesService) {}
+  constructor(
+    private articlesService: ArticlesService,
+    private visitedLinksService: VisitedLinksService
+  ) {}
 
   @Get('titles')
-  getAllTitles(): Partial<Article>[] {
-    return this.articlesService.getAllTitles();
+  async getAllTitles(): Promise<Partial<Article>[]> {
+    return await this.articlesService.getAllTitles();
   }
 
   @UseGuards(JwtAuthGuard)
   @Get(':id')
-  findOneById(@Param('id') id: string, @Req() req: Request): Article {
+  async findOneById(@Param('id') id: string, @Req() req: Request): Promise<Article> {
     const { user } = req as any;
     const userId = user?.id;
-    const article = this.articlesService.findById(id);
+    const article = await this.articlesService.findById(id);
 
-    if (id && userId) {
-      if (!visitedLinksStore[userId]) {
-        visitedLinksStore[userId] = [id];
-      } else {
-        visitedLinksStore[userId].push(id);
-      }
+    if (article) {
+      await this.visitedLinksService.create(`/article/${id}`, userId)
+      return article
     }
 
-    this.logVisitedLinks();
-
-    return article;
-  }
-
-  private logVisitedLinks() {
-    Logger.log(visitedLinksStore, 'Visited Links: ');
+    return null;
   }
 }
